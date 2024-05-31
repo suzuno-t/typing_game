@@ -2,6 +2,8 @@
 let untyped = '';
 let typed = '';
 let score = 0;
+let correctCount = 0; // 正タイピング数
+let mistakeCount = 0; // 誤タイピング数 
 
 // 必要なHTML要素の取得
 const untypedfield = document.getElementById('untyped');
@@ -48,6 +50,9 @@ const keyPress = e => {
   // 誤タイプの場合
   if(e.key !== untyped.substring(0,1)){
     wrap.classList.add('mistyped');
+    // スコアのデクリメント
+    score--;
+    mistakeCount++;
 
     // 100ms後に背景色を元に戻す
     setTimeout(() => {
@@ -59,6 +64,7 @@ const keyPress = e => {
   // 正タイプの場合
   // スコアのインクリメント
   score++;
+  correctCount++;
   typed += untyped.substring(0,1);
   untyped = untyped.substring(1);
   typedfield.textContent = typed;
@@ -74,21 +80,37 @@ const keyPress = e => {
 const rankCheck = score => {
 
   // テキストを格納する変数を作る
-  let text = '';
+  let scoreText = '';
 
   // スコアに応じて異なるメッセージを変数TEXTに格納する
-  if(score <100) {
-    text = `あなたのランクはCです。\nBランクまであと${100 - score}文字です。`;
+  if(score <1) {
+    scoreText = `あなたのランクはDです。\nCランクまであと${100 - score}文字です。`;
+  }else if(score < 100){
+    scoreText = `あなたのランクはCです。\nBランクまであと${100 - score}文字です。`;
   }else if(score < 200){
-    text = `あなたのランクはBです。\nAランクまであと${200 - score}文字です。`;
+    scoreText = `あなたのランクはBです。\nAランクまであと${200 - score}文字です。`;
   }else if(score < 300){
-    text = `あなたのランクはAです。\nSランクまであと${300 - score}文字です。`;
+    scoreText = `あなたのランクはAです。\nSランクまであと${300 - score}文字です。`;
   }else if(score >= 300){
-    text = `あなたのランクはSです。\nおめでとうございます！`;
+    scoreText = `あなたのランクはSです。\nすごい！！おめでとうございます！`;
   }
 
+    // テキストを格納する変数を作る
+    let mistakeText = '';
+
+    // ミスに応じて異なるメッセージを変数TEXTに格納する
+    if(mistakeCount <1) {
+      mistakeText = `あなたのミスタイピングは${mistakeCount}です。すごい！！`;
+    }else if(mistakeCount < 10){
+      mistakeText = `あなたのミスタイピングは${mistakeCount}です。優秀です！`;
+    }else if(mistakeCount < 30){
+      mistakeText = `あなたのミスタイピングは${mistakeCount}です。`;
+    }else if(mistakeCount > 29){
+      mistakeText = `あなたのミスタイピングは${mistakeCount}です。落ち着いてタイピングしましょう。`;
+    }
+  
   // 生成したメッセージと一緒に文字列を返す
-  return `${score}文字打てました！\n${text}\n【OK】リトライ/【キャンセル】終了`;
+  return `あなたのスコアは${score}です。\n([正タイピング]${correctCount}文字・[誤タイピング]${mistakeCount}文字）\n${scoreText}\n${mistakeText}\n【OK】リトライ/【キャンセル】終了`;
 };
 
 // ゲーム終了

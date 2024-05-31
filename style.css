@@ -2,22 +2,23 @@
 body {
   font-size: 6em;
   text-align: center;
+  background-color: #E6E6FA;
 }
 
 /* ゲーム時間の残り秒数が表示されるタイマーの領域 */
 .count {
   margin: 0;
   font-weight: bold;
-  color: #888;
+  color: #0000FF;
 }
 
 /* テキストが表示される領域 */
 .wrap {
   margin-top: 20px;
   padding: 80px 40px;
-  background-color: #666;
+  background-color: #FFFFFF;
   font-weight: bold;
-  color: #fff;
+  color: black;
 }
 
 /* 正しくタイプされた場合のテキスト */
@@ -29,3 +30,14 @@ body {
 .mistyped {
   background-color: red;
 }
+
+/* スタートの表示 */
+#start {
+  background-color: rgb(110, 109, 108);
+  font-size: 20px; /* フォントサイズを大きくする */
+  font-weight: bold;
+  color: #fff;
+  padding: 15px 30px; /* ボタン内の余白を広げる */
+  border: 2px solid #fff; /* ボタンの枠線を太くする */
+}
+
